@@ -17,7 +17,6 @@ namespace Forum.Web.Api
             builder.Configuration.AddEnvironmentVariables();
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -34,11 +33,9 @@ namespace Forum.Web.Api
             }
 
             app.UseAuthorization();
-
-
             app.MapControllers();
 
-            app.UseMigrations();
+            // app.UseMigrations();
             app.Run();
         }
     }

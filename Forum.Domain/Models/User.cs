@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Forum.Domain.Models
 {
@@ -13,5 +14,8 @@ namespace Forum.Domain.Models
         public bool IsDeleted { get; set; }
         public ISet<Comment> Comments { get; set; } = new HashSet<Comment>();
         public ISet<Topic> Topics { get; set; } = new HashSet<Topic>();
+        
+         public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
     }
 }

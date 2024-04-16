@@ -3,6 +3,7 @@ using System;
 using Forum.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Forum.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240415180650_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
@@ -32,12 +35,10 @@ namespace Forum.Infrastructure.Migrations
                     b.Property<int>("Likes")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Text")
-                        .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
                     b.Property<long?>("TopicId")
@@ -52,7 +53,7 @@ namespace Forum.Infrastructure.Migrations
 
                     b.HasIndex("TopicId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("Forum.Domain.Models.Topic", b =>
@@ -70,12 +71,10 @@ namespace Forum.Infrastructure.Migrations
                     b.Property<int>("Likes")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Subject")
-                        .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("UpdateDate")
@@ -85,7 +84,7 @@ namespace Forum.Infrastructure.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Topics", (string)null);
+                    b.ToTable("Topic");
                 });
 
             modelBuilder.Entity("Forum.Domain.Models.User", b =>
@@ -164,13 +163,11 @@ namespace Forum.Infrastructure.Migrations
                 {
                     b.HasOne("Forum.Domain.Models.User", "Creator")
                         .WithMany("Comments")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("CreatorId");
 
                     b.HasOne("Forum.Domain.Models.Topic", "Topic")
                         .WithMany("Comments")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TopicId");
 
                     b.Navigation("Creator");
 
@@ -181,8 +178,7 @@ namespace Forum.Infrastructure.Migrations
                 {
                     b.HasOne("Forum.Domain.Models.User", "Creator")
                         .WithMany("Topics")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("CreatorId");
 
                     b.Navigation("Creator");
                 });
