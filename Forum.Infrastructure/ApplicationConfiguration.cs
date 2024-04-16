@@ -21,7 +21,7 @@ namespace Forum.Infrastructure
             services.AddDbContext<DatabaseContext>((provider, options) =>
             {
                 var settings = provider.GetRequiredService<IOptions<DatabaseSettings>>();
-                options.UseSqlite(settings.Value.ConnectionString, config =>
+                options.UseNpgsql(settings.Value.ConnectionString, config =>
                 {
                     config.MigrationsHistoryTable(settings.Value.MigrationTable);
 
@@ -32,7 +32,8 @@ namespace Forum.Infrastructure
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
-
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<ITopicRepository, TopicRepository>();
             return services;
         }
 

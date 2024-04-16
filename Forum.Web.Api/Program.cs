@@ -35,7 +35,7 @@ namespace Forum.Web.Api
             app.UseAuthorization();
             app.MapControllers();
 
-            // app.UseMigrations();
+            app.UseMigrations();
             app.Run();
         }
     }
